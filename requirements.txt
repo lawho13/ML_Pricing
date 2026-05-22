@@ -1,8 +1,10 @@
 pandas
 numpy
 scikit-learn
-torch
+# torch
 matplotlib
 seaborn
+ipykernel
+statsmodels
 
 # suggested to use a virtual environment when interacting with this project; dataset(s), requirements, and venv initalization must be done locally

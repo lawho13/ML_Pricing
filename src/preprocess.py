@@ -21,7 +21,6 @@ class DataPipeline:
 
     def impute_missing(self):
         num_cols = self.df.select_dtypes(include='number').columns
-        self.indicator_matrix = self.df[num_cols].isna().astype(int)
 
         # fill all numeric columns at once with cross-sectional monthly median
         self.df[num_cols] = self.df[num_cols].fillna(
@@ -31,7 +30,6 @@ class DataPipeline:
         # drop any rows where imputation couldn't fill (whole month was NaN)
         mask = self.df[num_cols].notna().all(axis=1)
         self.df = self.df.loc[mask].reset_index(drop=True)
-        self.indicator_matrix = self.indicator_matrix.loc[mask].reset_index(drop=True)
 
         print(f"After imputation: {self.df.shape[0]} rows, {self.df.shape[1]} columns")
         return self

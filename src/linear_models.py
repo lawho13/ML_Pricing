@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import ElasticNet
 from sklearn.decomposition import PCA
+from kneed import KneeLocator
+import statsmodels.api as sm
 
 class OLS:
     def __init__(self):
@@ -51,20 +53,42 @@ class ElasticNetModel:
     
 class PCAModel:
     # basically OLS with component grouping
-    def __init__(self, n_components=10):
+    def __init__(self, n_components):
         self.n_components = n_components
         self.pca = None
         self.weights = None
 
+    def optimal_components(self, X_train):
+        pca = PCA()
+
+        pca.fit(X_train)
+        explained_variance = pca.explained_variance_ratio_
+        cumulative_variance = np.cumsum(explained_variance)
+
+        max_pcs = min(20, X_train.shape[1])
+        pcs = np.arange(1, max_pcs + 1)
+
+        explained_variance = explained_variance[:max_pcs]
+
+        kneedle = KneeLocator(pcs, explained_variance, curve="convex", direction="decreasing")
+        knee_val = kneedle.knee
+
+        return knee_val
+    
     def fit(self, X, Y):
+        self.n_components = self.optimal_components(X)
+
         self.pca = PCA(n_components=self.n_components)
-        X_compressed = self.pca.fit_transform(X)
-        self.weights = np.linalg.lstsq(X_compressed, Y, rcond=None)[0]
+        X_reduced = sm.add_constant(self.pca.fit_transform(X))
+
+        self.model = sm.OLS(Y, X_reduced).fit()
+        
 
     def predict(self, X):
-        if self.weights is None:
-            raise ValueError("Model not fitted yet. Call fit(input: X, target: Y) first.")
-        return self.pca.transform(X) @ self.weights
+        X_reduced = sm.add_constant(self.pca.transform(X))
+        pred = self.model.predict(X_reduced)
+        
+        return pred
     
 
     

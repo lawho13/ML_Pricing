@@ -7,7 +7,7 @@ import statsmodels.api as sm
 
 class OLS:
     def __init__(self):
-        self.weights = None
+        self.model = None
 
 
     def fit(self, X, Y):
@@ -17,14 +17,15 @@ class OLS:
         # is being best adjusted to equal the return. These weights are the closest possible fit - a minimization of the sum of
         # squared errors between X @ w and Y. This is OLS.
         # the actual math: self.weights = np.linalg.inv(X.T @ X) @ X.T @ Y
-        self.weights = np.linalg.lstsq(X, Y, rcond=None)[0]
+        X_constant = sm.add_constant(X)
+        self.model = sm.OLS(Y, X_constant).fit()
         # the stable version ^
 
     def predict(self, X):
         if self.weights is None:
             raise ValueError("Model not fitted yet. Call fit(input: X, target: Y) first.")
         # multiply input df X by the weights such that Xw = Y where Y represents predictions
-        predictions = X @ self.weights
+        predictions = self.model.predict(X)
         return predictions
     
 
@@ -34,7 +35,7 @@ class ElasticNetModel:
         # l1_ratio is the different types alpha "acts through", that is, if l1_ratio = 1, it's all l1 - and this zeroes out
         # large features, or l2, which shrinks them, which is represented by l1_ratio = 0. These are the hyperparameters,
         # and this is the elastic net.
-        self.weights = None
+        self.model = None
         self.alpha = alpha
         self.l1_ratio = l1_ratio
         self.model = None
@@ -56,7 +57,7 @@ class PCAModel:
     def __init__(self, n_components):
         self.n_components = n_components
         self.pca = None
-        self.weights = None
+        self.model = None
 
     def optimal_components(self, X_train):
         pca = PCA()

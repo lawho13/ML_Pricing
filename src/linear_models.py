@@ -16,7 +16,6 @@ class OLS:
         # amount of multiplications for each weight. The sum of all of these weights and values in the columns
         # is being best adjusted to equal the return. These weights are the closest possible fit - a minimization of the sum of
         # squared errors between X @ w and Y. This is OLS.
-        # the actual math: self.weights = np.linalg.inv(X.T @ X) @ X.T @ Y
         X_constant = sm.add_constant(X)
         self.model = sm.OLS(Y, X_constant).fit()
         # the stable version ^

@@ -4,7 +4,7 @@ import torch.nn as nn
 
 
 class NeuralNetModel:
-    def __init__(self, hidden=32, epochs=10, 
+    def __init__(self, hidden=32, epochs=100, 
                  lr=1e-3, l1= 1e-4, batch_size = 10000,
                  patience = 5):
         # l1 (1e-5, 1e-3)

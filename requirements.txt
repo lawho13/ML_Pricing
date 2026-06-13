@@ -4,8 +4,8 @@ scikit-learn
 torch
 matplotlib
 seaborn
-ipykernel
 statsmodels
 kneed
-
-# suggested to use a virtual environment when interacting with this project; dataset(s), requirements, and venv initalization must be done locally
+ipykernel 
+scipy
+xgboost

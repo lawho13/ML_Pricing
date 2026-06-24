@@ -15,5 +15,7 @@ Note: CRSP returns are not included. They are accessible from WRDS.
 Paper Note on missing data:
 "The ninety-four predictive characteristics are based on those of Green et al. (2017), and we adapt the SAS code available from Jeremiah Green’s Web site and extend the sample period back to 1957. Our data construction differs by more closely adhering to variable definitions in original papers. For example, we construct book-equity and operating profitability following Fama and French (2015). Most of these characteristics are released to the public with a delay. To avoid the forward-looking bias, we assume that monthly characteristics are delayed by at most 1 month, quarterly with at least 4 months lag, and annual with at least 6 months lag. Therefore, to predict returns at month t +1, we use most recent monthly characteristics at the end of month t, most recent quarterly data by end t −4, and most recent annual data by end t −6. Another issue is missing characteristics, which we replace with the cross-sectional median at each month for each stock, respectively."
 
+We do not have WRDS data accessibility as of now, so, monthly characteristcs are not included in our analysis. This will be an analysis solely of stock charactersitics and a proxy of excess returns.
+
 Raw monthly returns proxied as shifted 1-month momentum, Excess returns (target) is computed using risk-free rate data from Fama/French 3 Factors dataset
 Fomrula is as follows r_excess = r_raw-risk_free_rate/100 , indexed by time (monthly)

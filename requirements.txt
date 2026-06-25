@@ -9,3 +9,4 @@ kneed
 ipykernel 
 scipy
 xgboost
+yfinance

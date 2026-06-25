@@ -19,3 +19,5 @@ We do not have WRDS data accessibility as of now, so, monthly characteristcs are
 
 Raw monthly returns proxied as shifted 1-month momentum, Excess returns (target) is computed using risk-free rate data from Fama/French 3 Factors dataset
 Fomrula is as follows r_excess = r_raw-risk_free_rate/100 , indexed by time (monthly)
+
+Portfolio construction used Equal weights rather than market cap methodology (simplicity + data availability)
